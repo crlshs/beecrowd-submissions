@@ -1,0 +1,1 @@
+print(atual, "a", vizinhos)

@@ -26,8 +26,6 @@ def get_ortogonal(matriz, i, j, valor):
 
     valores = [i for i in [direita, esquerda, cima, baixo] if i != -1]
 
-    
-
 atual = matrizoriginal[1][1]
 matrizpoderes = [[0] * c] * l
 

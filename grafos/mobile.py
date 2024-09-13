@@ -6,34 +6,37 @@ for _ in range(n):
     grafo[a].append(b)
     grafo[b].append(a)
 
+def dfs(grafo, visitado, vertice):
+    pilha = [vertice]
 
-def dfs(grafo, node):
-    visitados = set()
-    tamanhos_submobiles = {}
-
-    pilha = [node]
-    ligacoes = len(grafo[node])
     while pilha:
-        atual = pilha[-1]
+        atual = pilha.pop()
 
-        if atual in visitados:
-            pilha.pop()
-        
-        visitados.add(atual)
+        vizinhos = grafo[atual]
+        # [5, 6]
+        if len(vizinhos) > 2:
+            vizinhos = vizinhos[1:]
+            # print(atual, "a", vizinhos)
+            numfilhos = len(grafo[vizinhos[0]])
+            # print(vizinhos[0], " - ", numfilhos, " - ", grafo[vizinhos[0]])
 
-        tamanhos = []
+            for filho in range(1, len(vizinhos)):
+                numfilhosdois = len(grafo[vizinhos[filho]])
 
-        for vizinho in grafo[atual]:
-            if vizinho not in visitados:
-                pilha.append(vizinho)
-            else:
-                tamanhos.append(tamanhos_submobiles.get(vizinho, 1))
+                # print(vizinhos[filho], " - ", numfilhosdois, " - ", grafo[vizinhos[filho]], "b")
 
-        if tamanhos and len(set(tamanhos)) > 1:
-            return "mal"
+                # print(f"{atual} - {vizinhos} - {numfilhos} - {numfilhosdois}")
 
-        tamanhos_submobiles[atual] = sum(tamanhos) + 1
+                if numfilhosdois != numfilhos: return "mal"
 
+        if atual not in visitado:
+            visitado.add(atual)
+
+        for v in grafo[atual]:
+            if v not in visitado:
+                pilha.append(v)
     return "bem"
 
-print(dfs(grafo, 1))
+visitado = set()
+
+print(dfs(grafo, visitado, 0))

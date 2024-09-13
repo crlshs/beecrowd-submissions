@@ -28,8 +28,4 @@ for i in range(1, n+1):
         dfs(grafo, visitado, i)
         familias += 1
 
-# pilha = []
-# visitados = [1, 3, 4, 2, 5, 6]
-# familias = 1 + 1
-
 print(familias)
