@@ -1,29 +1,21 @@
 nm = list(map(int, input().split()))
-
-lista = []
-lista.extend(i for i in range(1,(nm[0]+1)))
+lista = list(range(1, nm[0] + 1))
+soma_prefixo = [0] * (len(lista) + 1)
+atualizado = True
 
 def inverte(x: int, y: int, lista: list):
-    x -= 1
-    y -= 1
-
     while x < y:
-        lista[x], lista[y] = lista[y], lista[x]
+        lista[x - 1], lista[y - 1] =  lista[y - 1], lista[x - 1]
         x += 1
         y -= 1
-    return lista
 
 def construir_sprefixo(lista):
-    soma_prefixo = [0] * (len(lista) + 1)
     for i in range(1, len(lista) + 1):
         soma_prefixo[i] = soma_prefixo[i - 1] + lista[i - 1]
-    return soma_prefixo
-
-def soma(x: int, y: int, soma_prefixo: list):
-    return soma_prefixo[y] - soma_prefixo[x - 1]
 
 #
 somas = []
+construir_sprefixo(lista)
 
 for _ in range(nm[1]):
     instrucao = list(str(input()).split())
@@ -32,10 +24,15 @@ for _ in range(nm[1]):
     op = instrucao[0]
 
     if op == "I":
-        lista = inverte(x, y, lista)
+        inverte(x, y, lista)
+        atualizado = False
+
     elif op == "S":
-        soma_prefixo = construir_sprefixo(lista)
-        somas.append(soma(x, y, soma_prefixo))
+        if not atualizado:
+            construir_sprefixo(lista)
+            atualizado = True
+
+        somas.append(soma_prefixo[y] - soma_prefixo[x - 1])
 
 for i in somas:
     print(i)

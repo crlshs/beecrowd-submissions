@@ -4,9 +4,12 @@ numeros.sort()
 
 possiveis = 0
 
-for i in range(len(numeros)):
-    for j in range(i+1, len(numeros)):
-        for k in range(j+1, len(numeros)):
-            possiveis += (1 if (numeros[i] + numeros[j] > numeros[k] and numeros[i] + numeros[k] > numeros[j] and numeros[j] + numeros[k] > numeros[i]) else 0)
+for i in range(n - 2):
+    k = i + 2
+    for j in range(i+1, n-1):
+        k = max(k, j+1)
+        while k < n and numeros[i] + numeros[j] > numeros[k]:
+            k += 1
+        possiveis += (k - 1) - j
 
 print(possiveis)

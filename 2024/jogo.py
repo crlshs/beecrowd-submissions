@@ -1,49 +1,38 @@
-nq = list(map(int, input("").split()))
-matriz = [[2] * (nq[0]+2)]
+n, q = map(int, input().split())
 
-for i in range(nq[0]):
-    linha = []
-    linhap = list(map(str, input("").split()))
-    for i in linhap:
-        for j in i:
-            linha.append(int(j))
-    
-    linha.insert(0, 2)
-    linha.insert(nq[0]+1, 2)
+matriz = []
+valores = []
+
+for _ in range(n):
+    linha = list(map(int, input().split()))
     matriz.append(linha)
-matriz.append([2] * (nq[0]+2))
-# print(matriz)
 
-# 2 2 2 2 2
-# 2 0 0 0 2
-# 2 0 0 0 2
-# 2 0 0 0 2
-# 2 2 2 2 2
+def vizinhos(i, j, matriz):
+    direita = matriz[i][j+1]
+    esquerda = matriz[i][j-1]
+    cima = matriz[i-1][j]
+    baixo = matriz[i+1][j]
 
-# repetir isso Q vezes
-for i, linha in enumerate(matriz):
-    if i <= nq[0]:
-        for j, val in enumerate(linha):
-            if j <= nq[0]:
-                vizinhas = [[matriz[i+1][j]],
-                            [matriz[i-1][j]],
-                            [matriz[i][j+1]],
-                            [matriz[i][j-1]],
-                            [matriz[i+1][j+1]],
-                            [matriz[i-1][j-1]],
-                            [matriz[i+1][j-1]],
-                            [matriz[i-1][j+1]]
-                            ]
-                # quando morta
-                if val == 0:
-                    if vizinhas.count(1) == 3:
-                        print(i, j)
-                        print(vizinhas)
-                        matriz[i][j] = 1
+    vizinhas = []
+    if j+1 != q: vizinhas.append([direita, (i, j+1)])
+    if j-1 > 0: vizinhas.append([esquerda, (i, -1)])
+    if i-1 > 0: vizinhas.append([cima, (i-1, j)])
+    if i+1 != n: vizinhas.append([baixo, (i+1, j)])
 
-                # quando viva
-                if val == 1:
-                    pass
+    return vizinhas
 
-for i in matriz:
-    print("".join(map(str, i)))
+matrizresposta = []
+
+linha = 0
+coluna = 0
+while linha != n and coluna != q:
+    atual = matriz[linha][coluna]
+    soma = atual + 0
+
+    vizinhas = vizinhos(linha, coluna, matriz)
+    matrizcopy = matriz.copy()
+
+    while True:
+        if min(vizinhas[0]) > atual:
+            matrizresposta[linha][coluna] = soma
+            break

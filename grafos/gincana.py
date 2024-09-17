@@ -1,6 +1,8 @@
 def dfs(grafo, visitado, node):
     # cesta para visitar depois
     pilha = [node]
+
+    # visitado []
     while pilha:
         atual = pilha.pop()
         if atual not in visitado:
@@ -8,6 +10,7 @@ def dfs(grafo, visitado, node):
 
         # ver as amigas de V, para visitar elas depois
         for v in grafo[atual]:
+            # [2 , 3]
             if v not in visitado:
                 pilha.append(v)
 
@@ -27,4 +30,5 @@ for v in range(1, n+1):
     if v not in visitado:
         dfs(grafo, visitado, v)
         times += 1
+
 print(times)
