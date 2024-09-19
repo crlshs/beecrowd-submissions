@@ -13,7 +13,7 @@ while True:
             resultado.pop()
             apagar -= 1
         resultado.append(i)
-    
+
     resultado = resultado[:nd[0] - apagar]
 
     res.append("".join(str(i)for i in resultado))

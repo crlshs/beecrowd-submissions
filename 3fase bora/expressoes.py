@@ -10,18 +10,18 @@ def analisa(caracteres):
     len(caracteres) % 2 != 0:
         return "N"
 
-    stack = []
+    pilha = []
     pares = {')': '(', ']': '[', '}': '{'}
 
     for char in caracteres:
         if char in "({[":
-            stack.append(char)
+            pilha.append(char)
         elif char in ")}]":
-            if not stack or stack[-1] != pares[char]:
+            if not pilha or pilha[-1] != pares[char]:
                 return "N"
-            stack.pop()
+            pilha.pop()
 
-    return "S" if not stack else "N"
+    return "S" if not pilha else "N"
 
 for _ in range(n):
     caracteres = list(input())
