@@ -1,8 +1,31 @@
-# 2 4 6 8 10
-# 2 6 12 20 30
+def minimo_balanceamento(N, K, bonecas):
+    bonecas.sort()
+    
+    balanceamentos = []
 
-def inverte(x: int, y: int, lista: list):
-    lista[x:y+1] = lista[x:y+1][::-1]
+    for i in range(N - 2):
+        A = bonecas[i]
+        B = bonecas[i + 1]
+        balanceamento = (A - B) ** 2
+        balanceamentos.append((balanceamento, i))
 
-for i in range(2, len(lista) + 1):
-    soma_prefixo[i] = soma_prefixo[i - 1] + lista[i]
+    balanceamentos.sort()
+
+    usados = [False] * N
+    soma_balanceamentos = 0
+    trios_formados = 0
+
+    for balanceamento, i in balanceamentos:
+        if not usados[i] and not usados[i + 1] and not usados[i + 2]:
+            soma_balanceamentos += balanceamento
+            trios_formados += 1
+            usados[i] = usados[i + 1] = usados[i + 2] = True
+            if trios_formados == K:
+                break
+
+    return soma_balanceamentos
+
+N, K = map(int, input().split())
+bonecas = list(map(int, input().split()))
+
+print(minimo_balanceamento(N, K, bonecas))
